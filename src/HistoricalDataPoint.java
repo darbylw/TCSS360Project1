@@ -77,7 +77,7 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
             yearlyLow = Math.min(point, yearlyLow);
         }
         if (point > dailyHigh || point > monthlyHigh || point > yearlyHigh) {
-            dailyHigh = Math.min(point, dailyHigh);
+            dailyHigh = Math.max(point, dailyHigh);
             monthlyHigh = Math.max(point, monthlyHigh);
             yearlyHigh = Math.max(point, yearlyHigh);
         }
