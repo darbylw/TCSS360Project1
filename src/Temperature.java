@@ -3,6 +3,8 @@
  * temperature sensor, providing historical metrics.
  */
 
+import java.util.Objects;
+
 /**
  * The temperature class processes input from the
  * temperature sensor and provides historical metrics.
@@ -11,10 +13,10 @@
  */
 public class Temperature extends HistoricalDataPoint {
 
-    /** The location of the temperature sensor, see station spec for details. */
-    public enum Sensor {INSIDE, OUTSIDE, EXTRA}
     /** The temperature paradigm used to measure data. */
     public enum Temp {CELCIUS, FAHRENHEIT}
+    /** The sensor type providing this instance with data. */
+    private Sensor sensorType;
     /** The upper bound of the acceptable input range. */
     private double rangeHigh;
     /** The lower bound of the acceptable input range. */
@@ -22,12 +24,15 @@ public class Temperature extends HistoricalDataPoint {
 
     /**
      * Constructs a new Temperature data processing
-     * instance with the specified scale and sensor.
+     * instance for the specified scale and sensor.
      * @param sns the type of sensor that will send this
      *            object data (inside, outside, or extra)
      * @param tmp the desired temperature scale (C or F)
      */
     public Temperature(Sensor sns, Temp tmp) {
+        Objects.requireNonNull(sns, "Sensor type cannot be null.");
+        Objects.requireNonNull(tmp, "Temperature scale cannot be null.");
+        sensorType = sns;
         if (sns ==  Sensor.INSIDE) {
             rangeHigh = tmp == Temp.CELCIUS ? 60 : 140;
             rangeLow = tmp == Temp.CELCIUS ? 0 : 32;
@@ -45,7 +50,9 @@ public class Temperature extends HistoricalDataPoint {
      */
     @Override
     public void addDataPoint(double point) {
-        if (point <= rangeHigh && point >= rangeLow)
+        if (point <= rangeHigh && point >= rangeLow && sensorType != Sensor.EXTRA)
             super.addDataPoint(point);
+        else if (point <= rangeHigh && point >= rangeLow && sensorType == Sensor.EXTRA)
+            allReadings.add(point);
     }
 }

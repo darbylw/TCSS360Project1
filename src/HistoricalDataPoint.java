@@ -13,6 +13,8 @@ import java.util.*;
  */
 abstract class HistoricalDataPoint implements WDataPoint, Serializable {
 
+    /** All data points received from sensor. */
+    protected final List<Double> allReadings = new ArrayList<>();
     /** The most recent reading from the sensor. */
     private double currentReading;
     /** Daily high temp. Resets every 24 hours after initial data point is added.*/
@@ -29,8 +31,6 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     private double yearlyLow = Double.MAX_VALUE;
     /** Aggregated readings from each hour. */
     private final List<Double> hourlyReadings = new ArrayList<>();
-    /** All readings. */
-    private final List<Double> allReadings = new ArrayList<>();
     /** Calendar object, tracks time stamps. */
     private final GregorianCalendar currCal = new GregorianCalendar();
     /** Epoch time stamp, tracks when an hour has passed. */
