@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Cumulatively processes sensor input and tacks historical
+ * Cumulatively processes sensor input and tracks historical
  * metrics.
  * @author Spencer Little
  * @version 0.0.0
@@ -34,7 +34,7 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     /** Calendar object, tracks time stamps. */
     private final GregorianCalendar currCal = new GregorianCalendar();
     /** Epoch time stamp, tracks when an hour has passed. */
-    private long hourInterval = currCal.getTime().getTime();
+    private long hourInterval = currCal.getTimeInMillis();
     /** The Calendar day in which the most recent data point was added. */
     private int currDay = currCal.get(Calendar.DAY_OF_YEAR);
     /** The Calendar month in which the most recent data point was added. */
@@ -55,18 +55,22 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
         currentReading = point;
 
         if ((currCal.getTime().getTime() - hourInterval) >= 3600000) {
+            hourInterval = currCal.getTimeInMillis();
             hourlyReadings.add(point);
             hourInterval = currCal.getTime().getTime();
         }
         if (currCal.get(Calendar.DAY_OF_YEAR) != currDay) {
+            currDay = currCal.get(Calendar.DAY_OF_YEAR);
             dailyHigh = point;
             dailyLow = point;
         }
         if (currCal.get(Calendar.MONTH) != currMonth) {
+            currMonth = currCal.get(Calendar.MONTH);
             monthlyHigh = point;
             monthlyLow = point;
         }
         if (currCal.get(Calendar.YEAR) != currYear) {
+            currYear = currCal.get(Calendar.YEAR);
             yearlyHigh = point;
             yearlyLow = point;
         }
