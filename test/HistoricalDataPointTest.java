@@ -25,7 +25,7 @@ public class HistoricalDataPointTest {
     /**
      * Tests the tracking of daily high/low data points by generating
      * random humidity values and manually incrementing the Humidity
-     * objects Calendar.
+     * object's Calendar.
      * @author Spencer Little
      * @version 0.0.0
      */
@@ -53,7 +53,7 @@ public class HistoricalDataPointTest {
     /**
      * Tests the tracking of monthly high/low data points by generating
      * random humidity values and manually incrementing the Humidity
-     * objects Calendar.
+     * object's Calendar.
      * @author Spencer Little
      * @version 0.0.0
      */
@@ -81,7 +81,7 @@ public class HistoricalDataPointTest {
     /**
      * Tests the tracking of yearly high/low data points by generating
      * random humidity values and manually incrementing the Humidity
-     * objects Calendar.
+     * object'Sos Calendar.
      * @author Spencer Little
      * @version 0.0.0
      */
