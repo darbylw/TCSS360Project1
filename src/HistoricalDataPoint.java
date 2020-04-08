@@ -42,6 +42,12 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     /** The Calendar year in which the most recent data point was added. */
     private int currYear = currCal.get(Calendar.YEAR);
 
+
+    /** Gets the most recent hourly reading. */
+    public Double getHourlyReading() {
+        return hourlyReadings.get(hourlyReadings.size() - 1);
+    }
+
     public List<Double> getAllReadings() {
         return allReadings;
     }

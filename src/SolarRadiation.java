@@ -63,10 +63,10 @@ public class SolarRadiation extends HistoricalDataPoint {
     public String alarmWarning(double point) {
         double point1 = point;
         StringBuilder sb = new StringBuilder();
-        if (point1 >= super.getDailyHigh()) {
+        if (point1 >= super.getHourlyReading()) {
             sb.append("WARNING!, Higher Radiations than usual");
         }
-        
+
         return sb.toString();
     }
 }
