@@ -13,6 +13,8 @@ import java.util.*;
  */
 abstract class HistoricalDataPoint implements WDataPoint, Serializable {
 
+    /** Calendar object, tracks time stamps. */
+    public final GregorianCalendar currCal = new GregorianCalendar();
     /** All data points received from sensor. */
     protected final List<Double> allReadings = new ArrayList<>();
     /** The most recent reading from the sensor. */
@@ -31,8 +33,6 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     private double yearlyLow = Double.MAX_VALUE;
     /** Aggregated readings from each hour. */
     private final List<Double> hourlyReadings = new ArrayList<>();
-    /** Calendar object, tracks time stamps. */
-    private final GregorianCalendar currCal = new GregorianCalendar();
     /** Epoch time stamp, tracks when an hour has passed. */
     private long hourInterval = currCal.getTimeInMillis();
     /** The Calendar day in which the most recent data point was added. */
@@ -42,6 +42,41 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     /** The Calendar year in which the most recent data point was added. */
     private int currYear = currCal.get(Calendar.YEAR);
 
+    public List<Double> getAllReadings() {
+        return allReadings;
+    }
+
+    public double getCurrentReading() {
+        return currentReading;
+    }
+
+    public double getDailyHigh() {
+        return dailyHigh;
+    }
+
+    public double getDailyLow() {
+        return dailyLow;
+    }
+
+    public double getMonthlyHigh() {
+        return monthlyHigh;
+    }
+
+    public double getMonthlyLow() {
+        return monthlyLow;
+    }
+
+    public double getYearlyHigh() {
+        return yearlyHigh;
+    }
+
+    public double getYearlyLow() {
+        return yearlyLow;
+    }
+
+    public List<Double> getHourlyReadings() {
+        return hourlyReadings;
+    }
 
     /**
      * Adds a data point to the historical collection of data
@@ -54,10 +89,9 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
         allReadings.add(point);
         currentReading = point;
 
-        if ((currCal.getTime().getTime() - hourInterval) >= 3600000) {
+        if ((currCal.getTimeInMillis() - hourInterval) >= 3600000) {
             hourInterval = currCal.getTimeInMillis();
             hourlyReadings.add(point);
-            hourInterval = currCal.getTime().getTime();
         }
         if (currCal.get(Calendar.DAY_OF_YEAR) != currDay) {
             currDay = currCal.get(Calendar.DAY_OF_YEAR);
