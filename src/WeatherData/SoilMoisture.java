@@ -1,3 +1,5 @@
+package WeatherData;
+
 /**
  * The soil moisture data processing model which
  * measures highs and lows. 

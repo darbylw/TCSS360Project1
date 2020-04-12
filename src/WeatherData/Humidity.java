@@ -1,7 +1,9 @@
-/*
+package WeatherData;/*
  * The humidity data processing model, accepting humidity
  * metrics from the respective sensors.
  */
+
+import WeatherData.HistoricalDataPoint;
 
 import java.util.Objects;
 
@@ -23,13 +25,13 @@ public class Humidity extends HistoricalDataPoint {
     private final int rangeLow = 1;
 
     /**
-     * Constructs a new Humidity data processing
+     * Constructs a new WeatherData.Humidity data processing
      * instance for the specified sensor.
      * @param sns the type of sensor that will send this
      *            object data (inside, outside, or extra)
      */
     public Humidity(Sensor sns) {
-        Objects.requireNonNull(sns, "Sensor type cannot be null.");
+        Objects.requireNonNull(sns, "WeatherData.Sensor type cannot be null.");
         sensor = sns;
     }
 

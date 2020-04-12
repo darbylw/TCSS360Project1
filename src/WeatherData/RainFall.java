@@ -1,3 +1,7 @@
+package WeatherData;
+
+import WeatherData.HistoricalDataPoint;
+
 import java.util.Objects;
 
 /**
@@ -19,7 +23,7 @@ public class RainFall extends HistoricalDataPoint {
     public enum length {INCHES, MILLIMETERS}
     
     /**
-     * Constructs a new RainFall data processing
+     * Constructs a new WeatherData.RainFall data processing
      * instance for the specified measuring unit.
      * @param theLength is the unit of measurement
      */

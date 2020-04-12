@@ -1,15 +1,19 @@
+package WeatherData;
+
+import WeatherData.HistoricalDataPoint;
+
 import java.util.Objects;
 
 /**
- * Collects and processes ultraVoilet data from the
- * respective sensors.
+ * Collects the data from the sensor and adds to 
+ * the readings and throw warning if gets higher than normal.
  * @author Paras Sharma
  * @version 0.01
  */
-public class UltraViolet extends HistoricalDataPoint {
+public class SolarRadiation extends HistoricalDataPoint {
 
     /** The data type (category) that describes this object. */
-    private final DataType dataType = DataType.ULTRAVIOLET;
+    private final DataType dataType = DataType.SOLAR_RADIATION;
     /**
      * The sensor type providing this instance with data.
      */
@@ -22,30 +26,21 @@ public class UltraViolet extends HistoricalDataPoint {
      * Range the upper bound accepts
      */
     private final int rangeHigh;
-    /**
-     * Alarm lowRange
-     */
-    private final int alarmRangeLow;
-    /**
-     * Alarm highRange
-     */
-    private final double alarmRangeHigh;
 
 
     /**
-     * Constructs a new UltraViolet data processing
+     * Constructs a new WeatherData.UltraViolet data processing
      * instance for the specified sensor.
      *
      * @param s the type of sensor that will send this
-     *            object data (inside,
+     *          object data (inside,
      */
-    public UltraViolet(Sensor s) {
-        Objects.requireNonNull(s, "Sensor type cannot be null.");
+    public SolarRadiation(Sensor s) {
+        Objects.requireNonNull(s, "WeatherData.Sensor type cannot be null.");
         this.sensor = s;
         this.rangeLow = 0;
-        this.rangeHigh = 199; //MEDs
-        this.alarmRangeLow = 0;
-        this.alarmRangeHigh = 19.9; //MEDs
+        this.rangeHigh = 1800; // W/m^2
+
         //Not sure if we need to pull data from this since the sensor are purchased
     }
 
@@ -65,7 +60,8 @@ public class UltraViolet extends HistoricalDataPoint {
     }
 
     /**
-     * Throws a warning on display if the MEDs go high.
+     * Throws a warning on display if the W/m^2 go higher
+     * than hourly or daily reading.
      *
      * @param point, data that will compared with range
      * @return warning String
@@ -73,11 +69,8 @@ public class UltraViolet extends HistoricalDataPoint {
     public String alarmWarning(double point) {
         double point1 = point;
         StringBuilder sb = new StringBuilder();
-        if (point1 >= alarmRangeHigh) {
-            sb.append("WARNING!, UV dosage is HIGH");
-
-        } else if (point1 == alarmRangeLow) {
-            sb.append("No protection needed");
+        if (point1 >= super.getHourlyReading()) {
+            sb.append("WARNING!, Higher Radiations than usual");
         }
 
         return sb.toString();

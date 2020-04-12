@@ -1,3 +1,6 @@
+import WeatherData.DataType;
+import WeatherData.Sensor;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

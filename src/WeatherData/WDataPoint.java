@@ -1,4 +1,4 @@
-/*
+package WeatherData;/*
  * An interface specifying the base functionality for the
  * weather data point hierarchy.
  * 04/02/20 - Added file

@@ -1,15 +1,19 @@
+package WeatherData;
+
+import WeatherData.HistoricalDataPoint;
+
 import java.util.Objects;
 
 /**
- * Collects the data from the sensor and adds to 
- * the readings and throw warning if gets higher than normal.
+ * Collects and processes ultraVoilet data from the
+ * respective sensors.
  * @author Paras Sharma
  * @version 0.01
  */
-public class SolarRadiation extends HistoricalDataPoint {
+public class UltraViolet extends HistoricalDataPoint {
 
     /** The data type (category) that describes this object. */
-    private final DataType dataType = DataType.SOLAR_RADIATION;
+    private final DataType dataType = DataType.ULTRAVIOLET;
     /**
      * The sensor type providing this instance with data.
      */
@@ -22,21 +26,30 @@ public class SolarRadiation extends HistoricalDataPoint {
      * Range the upper bound accepts
      */
     private final int rangeHigh;
+    /**
+     * Alarm lowRange
+     */
+    private final int alarmRangeLow;
+    /**
+     * Alarm highRange
+     */
+    private final double alarmRangeHigh;
 
 
     /**
-     * Constructs a new UltraViolet data processing
+     * Constructs a new WeatherData.UltraViolet data processing
      * instance for the specified sensor.
      *
      * @param s the type of sensor that will send this
-     *          object data (inside,
+     *            object data (inside,
      */
-    public SolarRadiation(Sensor s) {
-        Objects.requireNonNull(s, "Sensor type cannot be null.");
+    public UltraViolet(Sensor s) {
+        Objects.requireNonNull(s, "WeatherData.Sensor type cannot be null.");
         this.sensor = s;
         this.rangeLow = 0;
-        this.rangeHigh = 1800; // W/m^2
-
+        this.rangeHigh = 199; //MEDs
+        this.alarmRangeLow = 0;
+        this.alarmRangeHigh = 19.9; //MEDs
         //Not sure if we need to pull data from this since the sensor are purchased
     }
 
@@ -56,8 +69,7 @@ public class SolarRadiation extends HistoricalDataPoint {
     }
 
     /**
-     * Throws a warning on display if the W/m^2 go higher
-     * than hourly or daily reading.
+     * Throws a warning on display if the MEDs go high.
      *
      * @param point, data that will compared with range
      * @return warning String
@@ -65,8 +77,11 @@ public class SolarRadiation extends HistoricalDataPoint {
     public String alarmWarning(double point) {
         double point1 = point;
         StringBuilder sb = new StringBuilder();
-        if (point1 >= super.getHourlyReading()) {
-            sb.append("WARNING!, Higher Radiations than usual");
+        if (point1 >= alarmRangeHigh) {
+            sb.append("WARNING!, UV dosage is HIGH");
+
+        } else if (point1 == alarmRangeLow) {
+            sb.append("No protection needed");
         }
 
         return sb.toString();

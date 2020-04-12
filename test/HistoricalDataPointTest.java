@@ -3,6 +3,9 @@
  * class.
  */
 
+import WeatherData.HistoricalDataPoint;
+import WeatherData.Humidity;
+import WeatherData.Sensor;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,21 +13,21 @@ import java.util.Calendar;
 import java.util.Random;
 
 /**
- * A set of unit tests covering the HistoricalDataPoint
+ * A set of unit tests covering the WeatherData.HistoricalDataPoint
  * class.
  * @author Spencer Little
  * @version 0.0.0
  */
 public class HistoricalDataPointTest {
 
-    /** The test data point, instantiated as a Humidity object. */
+    /** The test data point, instantiated as a WeatherData.Humidity object. */
     private final HistoricalDataPoint testCollector = new Humidity(Sensor.OUTSIDE);
     /** The random number generator used to create data points. */
     private final Random numGen = new Random();
 
     /**
      * Tests the tracking of daily high/low data points by generating
-     * random humidity values and manually incrementing the Humidity
+     * random humidity values and manually incrementing the WeatherData.Humidity
      * object's Calendar.
      * @author Spencer Little
      * @version 0.0.0
@@ -52,7 +55,7 @@ public class HistoricalDataPointTest {
 
     /**
      * Tests the tracking of monthly high/low data points by generating
-     * random humidity values and manually incrementing the Humidity
+     * random humidity values and manually incrementing the WeatherData.Humidity
      * object's Calendar.
      * @author Spencer Little
      * @version 0.0.0
@@ -80,7 +83,7 @@ public class HistoricalDataPointTest {
 
     /**
      * Tests the tracking of yearly high/low data points by generating
-     * random humidity values and manually incrementing the Humidity
+     * random humidity values and manually incrementing the WeatherData.Humidity
      * object'Sos Calendar.
      * @author Spencer Little
      * @version 0.0.0

@@ -1,4 +1,4 @@
-/*
+package WeatherData;/*
  * A base class that manages historical data processing.
  */
 
@@ -11,7 +11,7 @@ import java.util.*;
  * @author Spencer Little
  * @version 0.0.0
  */
-abstract class HistoricalDataPoint implements WDataPoint, Serializable {
+public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
 
     /** The maximum number of data points held by an object. */
     public static final int CAPACITY = 24;
@@ -46,7 +46,7 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
 
     /**
      * Factor method to construct a data processing object from the
-     * specified DataType and Sensor.
+     * specified WeatherData.DataType and WeatherData.Sensor.
      * @param t the desired type of the new data point
      * @param s the type of sensor (only available for some data points)
      * @return a new data point with the specified type and sensor
@@ -78,10 +78,10 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
                 newPoint = new UltraViolet(s);
                 break;
             case WIND_DIRECTION:
-                newPoint = new UltraViolet(s); // still waiting on Darby's classes
+                newPoint = new WindDirection(s);
                 break;
             case WIND_SPEED:
-                newPoint = new UltraViolet(s); // UV will temporarily take place
+                newPoint = new WindSpeed(s);
                 break;
             default:
                 throw new IllegalArgumentException("Unable to construct processor from null data type.");

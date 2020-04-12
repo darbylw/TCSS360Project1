@@ -1,4 +1,4 @@
-/*
+package WeatherData;/*
  * An enum that models the different types of sensors
  * that are available on the weather station.
  */
@@ -11,10 +11,10 @@
  * @version 0.0.0
  */
 public enum Sensor {
-    /** Sensor located in console (see spec for details). */
+    /** WeatherData.Sensor located in console (see spec for details). */
     INSIDE,
-    /** Sensor located in ISS. */
+    /** WeatherData.Sensor located in ISS. */
     OUTSIDE,
-    /** Sensor located inside respective station. */
+    /** WeatherData.Sensor located inside respective station. */
     EXTRA
 }

@@ -1,7 +1,9 @@
-/*
+package WeatherData;/*
  * The temperature class manages sensor input from the
  * temperature sensor, providing historical metrics.
  */
+
+import WeatherData.HistoricalDataPoint;
 
 import java.util.Objects;
 
@@ -25,15 +27,15 @@ public class Temperature extends HistoricalDataPoint {
     private double rangeLow;
 
     /**
-     * Constructs a new Temperature data processing
+     * Constructs a new WeatherData.Temperature data processing
      * instance for the specified scale and sensor.
      * @param sns the type of sensor that will send this
      *            object data (inside, outside, or extra)
      * @param tmp the desired temperature scale (C or F)
      */
     public Temperature(Sensor sns, Temp tmp) {
-        Objects.requireNonNull(sns, "Sensor type cannot be null.");
-        Objects.requireNonNull(tmp, "Temperature scale cannot be null.");
+        Objects.requireNonNull(sns, "WeatherData.Sensor type cannot be null.");
+        Objects.requireNonNull(tmp, "WeatherData.Temperature scale cannot be null.");
         sensorType = sns;
         if (sns ==  Sensor.INSIDE) {
             rangeHigh = tmp == Temp.CELCIUS ? 60 : 140;

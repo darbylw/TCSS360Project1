@@ -1,4 +1,4 @@
-/*
+package WeatherData;/*
  * An enum that models the different types of sensor
  * data outputs.
  */
@@ -61,7 +61,7 @@ public enum DataType {
                 decriptor = "wind speed";
                 break;
             default:
-                decriptor = "err: null DataType";
+                decriptor = "err: null WeatherData.DataType";
                 break;
         }
         return decriptor;
