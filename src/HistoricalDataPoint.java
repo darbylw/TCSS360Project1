@@ -42,44 +42,92 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     /** The Calendar year in which the most recent data point was added. */
     private int currYear = currCal.get(Calendar.YEAR);
 
+    /**
+     * Factor method to construct a data processing object from the
+     * specified DataType and Sensor.
+     * @param t the desired type of the new data point
+     * @param s the type of sensor (only available for some data points)
+     * @return a new data point with the specified type and sensor
+     */
+    public static HistoricalDataPoint fromType(DataType t, Sensor s) {
+        Objects.requireNonNull(t, "The data type cannot be null.");
+        Objects.requireNonNull(s, "The sensor type cannot be null.");
+        HistoricalDataPoint newPoint = null;
+        switch (t) {
+            case HUMIDITY:
+                newPoint = new Humidity(s);
+                break;
+            case RAIN_FALL:
+                newPoint = new RainFall(RainFall.length.MILLIMETERS);
+                break;
+            case RAIN_RATE:
+                newPoint = new RainRate(RainRate.length.MILLIMETERS); // allow configs for in vs mm
+                break;
+            case SOIL_MOISTURE:
+                newPoint = new SoilMoisture();
+                break;
+            case SOLAR_RADIATION:
+                newPoint = new SolarRadiation(s);
+                break;
+            case TEMPERATURE:
+                newPoint = new Temperature(s, Temperature.Temp.CELCIUS);
+                break;
+            case ULTRAVIOLET:
+                newPoint = new UltraViolet(s);
+                break;
+        }
+        return newPoint;
+    }
 
     /** Gets the most recent hourly reading. */
     public Double getHourlyReading() {
         return hourlyReadings.get(hourlyReadings.size() - 1);
     }
 
+    /** Gets this objects data type. */
+    public abstract DataType getType();
+
+    /** Gets the record of all data point accepted by this object. */
     public List<Double> getAllReadings() {
         return allReadings;
     }
 
+    /** Gets the most recent data point accepted by this object. */
     public double getCurrentReading() {
         return currentReading;
     }
 
+    /** Gets the daily high. */
     public double getDailyHigh() {
         return dailyHigh;
     }
 
+    /** Gets the daily low. */
     public double getDailyLow() {
         return dailyLow;
     }
 
+    /** Gets the monthly high. */
     public double getMonthlyHigh() {
         return monthlyHigh;
     }
 
+    /** Gets the monthly low. */
     public double getMonthlyLow() {
         return monthlyLow;
     }
 
+    /** Gets the yearly high. */
     public double getYearlyHigh() {
         return yearlyHigh;
     }
 
+    /** Gets the yearly low. */
     public double getYearlyLow() {
         return yearlyLow;
     }
 
+    /** Gets all hourly readings. */
     public List<Double> getHourlyReadings() {
         return hourlyReadings;
     }
@@ -125,6 +173,5 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
             monthlyHigh = Math.max(point, monthlyHigh);
             yearlyHigh = Math.max(point, yearlyHigh);
         }
-
     }
 }

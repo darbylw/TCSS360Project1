@@ -5,6 +5,8 @@
  */
 public class SoilMoisture extends HistoricalDataPoint {
 
+    /** The data type (category) that describes this object. */
+    private final DataType dataType = DataType.SOIL_MOISTURE;
     /** A serial number for the class. */
     private static final long serialVersionUID = -6927110504185143175L;
     /** The upper bound of the acceptable input range in cb. */
@@ -24,6 +26,15 @@ public class SoilMoisture extends HistoricalDataPoint {
             super.addDataPoint(point);
         else if (point <= rangeHigh && point >= rangeLow)
             allReadings.add(point);
+    }
+
+    /**
+     * Returns this objects data type.
+     * @return an enum specifying the type of data this object represents
+     */
+    @Override
+    public DataType getType() {
+        return dataType;
     }
 
 }

@@ -1,7 +1,6 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import com.sun.corba.se.spi.orbutil.fsm.Input;
 
 /**
  * Accepts a test input file which will 
@@ -16,10 +15,10 @@ public class Main {
                 DataType.WIND_DIRECTION, DataType.WIND_SPEED, DataType.RAIN_RATE}; 
         
     public static void main(String[] args) {
-        DataRelay dataSet = new DataRelay();
+        DataRelay dataSet = new DataRelay(type, Sensor.OUTSIDE);
         String inputFileLocation = ""; //TODO add input file location here
         try {
-            File inputFile = new File(inputFileLocation); 
+            File inputFile = new File(inputFileLocation);
             Scanner s = new Scanner(inputFile);   
             int iterations = 0;
             while (s.hasNext()) {

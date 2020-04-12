@@ -7,6 +7,8 @@ import java.util.Objects;
  */
 public class RainRate extends HistoricalDataPoint {
 
+    /** The data type (category) that describes this object. */
+    private final DataType dataType = DataType.RAIN_RATE;
     /** A serial number for this class. */
     private static final long serialVersionUID = 4427698316186989617L;
     /** The upper bound of the acceptable input range. */
@@ -42,6 +44,15 @@ public class RainRate extends HistoricalDataPoint {
             super.addDataPoint(point);
         else if (point <= rangeHigh && point >= rangeLow)
             allReadings.add(point);
+    }
+
+    /**
+     * Returns this objects data type.
+     * @return an enum specifying the type of data this object represents
+     */
+    @Override
+    public DataType getType() {
+        return dataType;
     }
 
 }

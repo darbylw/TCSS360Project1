@@ -8,6 +8,8 @@ import java.util.Objects;
  */
 public class UltraViolet extends HistoricalDataPoint {
 
+    /** The data type (category) that describes this object. */
+    private final DataType dataType = DataType.ULTRAVIOLET;
     /**
      * The sensor type providing this instance with data.
      */
@@ -79,5 +81,14 @@ public class UltraViolet extends HistoricalDataPoint {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Returns this objects data type.
+     * @return an enum specifying the type of data this object represents
+     */
+    @Override
+    public DataType getType() {
+        return dataType;
     }
 }

@@ -7,6 +7,8 @@ import java.util.Objects;
  */
 public class RainFall extends HistoricalDataPoint {
 
+    /** The data type (category) that describes this object. */
+    private final DataType dataType = DataType.RAIN_FALL;
     /** A serial number for the class. */
     private static final long serialVersionUID = -6415044752166543910L;
     /** The upper bound of the acceptable input range in inches. */
@@ -43,5 +45,13 @@ public class RainFall extends HistoricalDataPoint {
         else if (point <= rangeHigh && point >= rangeLow)
             allReadings.add(point);
     }
-    
+
+    /**
+     * Returns this objects data type.
+     * @return an enum specifying the type of data this object represents
+     */
+    @Override
+    public DataType getType() {
+        return dataType;
+    }
 }

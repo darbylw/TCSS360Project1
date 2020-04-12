@@ -13,6 +13,8 @@ import java.util.Objects;
  */
 public class Humidity extends HistoricalDataPoint {
 
+    /** The data type (category) that describes this object. */
+    private final DataType dataType = DataType.HUMIDITY;
     /** The sensor type providing this instance with data. */
     private Sensor sensor;
     /** The upper bound of the acceptable input range. */
@@ -43,5 +45,14 @@ public class Humidity extends HistoricalDataPoint {
             super.addDataPoint(point);
         else if (point <= rangeHigh && point >= rangeLow && sensor == Sensor.EXTRA)
             allReadings.add(point);
+    }
+
+    /**
+     * Returns this objects data type.
+     * @return an enum specifying the type of data this object represents
+     */
+    @Override
+    public DataType getType() {
+        return dataType;
     }
 }
