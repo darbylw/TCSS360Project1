@@ -16,7 +16,7 @@ public class Main {
         
     public static void main(String[] args) {
         DataRelay dataSet = new DataRelay(type, Sensor.OUTSIDE);
-        String inputFileLocation = ""; //TODO add input file location here
+        String inputFileLocation = "test10000.txt"; //TODO add input file location here
         try {
             File inputFile = new File(inputFileLocation);
             Scanner s = new Scanner(inputFile);   

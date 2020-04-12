@@ -28,6 +28,42 @@ public enum DataType {
     /** The direction of the wind. */
     WIND_DIRECTION, 
     /** The speed of the wind. */
-    WIND_SPEED
+    WIND_SPEED;
 
+    public String toString() {
+        String decriptor;
+        switch (this) {
+            case HUMIDITY:
+                decriptor = "humidity";
+                break;
+            case SOLAR_RADIATION:
+                decriptor = "solar radiation";
+                break;
+            case TEMPERATURE:
+                decriptor = "temperature";
+                break;
+            case ULTRAVIOLET:
+                decriptor = "ultra violet";
+                break;
+            case RAIN_FALL:
+                decriptor = "rain fall";
+                break;
+            case RAIN_RATE:
+                decriptor = "rain rate";
+                break;
+            case SOIL_MOISTURE:
+                decriptor = "soil moisture";
+                break;
+            case WIND_DIRECTION:
+                decriptor = "wind direction";
+                break;
+            case WIND_SPEED:
+                decriptor = "wind speed";
+                break;
+            default:
+                decriptor = "err: null DataType";
+                break;
+        }
+        return decriptor;
+    }
 }

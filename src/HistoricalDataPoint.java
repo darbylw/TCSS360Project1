@@ -13,10 +13,12 @@ import java.util.*;
  */
 abstract class HistoricalDataPoint implements WDataPoint, Serializable {
 
+    /** The maximum number of data points held by an object. */
+    public static final int CAPACITY = 24;
     /** Calendar object, tracks time stamps. */
     public final GregorianCalendar currCal = new GregorianCalendar();
     /** All data points received from sensor. */
-    protected final List<Double> allReadings = new ArrayList<>();
+    protected final LinkedList<Double> allReadings = new LinkedList<>();
     /** The most recent reading from the sensor. */
     private double currentReading;
     /** Daily high temp. Resets every 24 hours after initial data point is added.*/
@@ -52,7 +54,7 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     public static HistoricalDataPoint fromType(DataType t, Sensor s) {
         Objects.requireNonNull(t, "The data type cannot be null.");
         Objects.requireNonNull(s, "The sensor type cannot be null.");
-        HistoricalDataPoint newPoint = null;
+        HistoricalDataPoint newPoint;
         switch (t) {
             case HUMIDITY:
                 newPoint = new Humidity(s);
@@ -75,6 +77,14 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
             case ULTRAVIOLET:
                 newPoint = new UltraViolet(s);
                 break;
+            case WIND_DIRECTION:
+                newPoint = new UltraViolet(s); // still waiting on Darby's classes
+                break;
+            case WIND_SPEED:
+                newPoint = new UltraViolet(s); // UV will temporarily take place
+                break;
+            default:
+                throw new IllegalArgumentException("Unable to construct processor from null data type.");
         }
         return newPoint;
     }
@@ -140,10 +150,12 @@ abstract class HistoricalDataPoint implements WDataPoint, Serializable {
      */
     @Override
     public void addDataPoint(double point) {
-        allReadings.add(point);
+        allReadings.addLast(point);
+        if (allReadings.size() > CAPACITY) allReadings.removeFirst();
         currentReading = point;
 
         if ((currCal.getTimeInMillis() - hourInterval) >= 3600000) {
+            hourlyReadings.clear();
             hourInterval = currCal.getTimeInMillis();
             hourlyReadings.add(point);
         }
