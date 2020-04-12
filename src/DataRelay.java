@@ -43,7 +43,7 @@ public class DataRelay implements Serializable {
         }
     }
     
-    /** Serializes the data from the output file.
+    /** Serializes an input file. 
      * @param inputFile is the data file which we must serialize
      * @param serializedFile is the data file which we will transmit
      */
