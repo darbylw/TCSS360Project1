@@ -65,22 +65,20 @@ public class DataRelay implements Serializable {
         StringBuilder data = new StringBuilder();
         Formatter frmt = new Formatter(data);
         for (int i = 0; i < aggregators.size(); i++) {
-            frmt.format("%12s", aggregators.get(i).getType().toString());
-            if (i != aggregators.size() - 1) data.append(", ");
-            else data.append("\n");
+            frmt.format("%-16s", aggregators.get(i).getType().toString() + ", ");
         }
+        data.append("\n");
         for (int i = 0; i < HistoricalDataPoint.CAPACITY; i++) { // this method is ugly, needs some cleaning
             for (HistoricalDataPoint dataPoint : aggregators) {
                 if (dataPoint.getAllReadings().size() > i) {
-                    frmt.format("%12s", dataPoint.getAllReadings().get(i));
+                    frmt.format("%-16s", dataPoint.getAllReadings().get(i) + ", ");
                 } else {
-                    frmt.format("%12s", "--");
+                    frmt.format("%-16s", "--, ");
                 }
-                if (i != HistoricalDataPoint.CAPACITY - 1) data.append(", ");
             }
             data.append("\n");
         }
-        String fileUrl = DATA_URL + String.join("_", (new Date()).toString().split(" ")) + ".txt";
+        String fileUrl = DATA_URL + String.join("_", (new Date()).toString().split(" ")) + ".csv";
         try {
             FileOutputStream out = new FileOutputStream(fileUrl);
             out.write(data.toString().getBytes());
