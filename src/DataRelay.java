@@ -89,4 +89,23 @@ public class DataRelay implements Serializable {
         }
     }
     
+    /** Serializes an input file. 
+     * @param inputFile is the data file which we must serialize
+     * @param serializedFile is the data file which we will transmit
+     */
+    public File serializeData(File inputFile) {
+        File serializedFile = new File("serializedFile.txt");
+        try {    
+            FileOutputStream file = new FileOutputStream(serializedFile); 
+            ObjectOutputStream out = new ObjectOutputStream(file); 
+            //out serializes the inputFile into serializedFile
+            out.writeObject(inputFile); 
+            out.close(); 
+            file.close(); 
+            
+        } catch(IOException ex) { 
+            System.out.println("Error, input file could not be serialized."); 
+        } 
+        return serializedFile;
+    }
 }
