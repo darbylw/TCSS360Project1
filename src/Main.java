@@ -3,6 +3,7 @@ import WeatherData.Sensor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -28,6 +29,7 @@ public class Main {
                 String next = s.next();
                 Double data = Double.parseDouble(next); 
                 dataSet.acceptDataPoint(data, type[iterations % type.length]);
+                dataSet.incrementCal(Calendar.MINUTE, 15);
                 iterations++;
             }
             s.close();

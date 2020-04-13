@@ -8,7 +8,7 @@ import WeatherData.Sensor;
 
 import java.io.*;
 import java.util.Date;
-import java.util.Formatter;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,6 +42,17 @@ public class DataRelay implements Serializable {
         }
     }
 
+    /**
+     * Increments the Calendar of each data point object in this DataRelay.
+     * @param field the calendar field to increment (a constant from Calendar, eg. Calendar.YEAR)
+     * @param amount the amount to increment
+     */
+    public void incrementCal(int field, int amount) {
+        for (HistoricalDataPoint dp : aggregators) {
+            dp.addToCal(field, amount);
+        }
+    }
+
 
     /**
      * Accepts a data point from a sensor, adding it to the respective
@@ -63,25 +74,25 @@ public class DataRelay implements Serializable {
      * Writes the data in each file object to a unified text file.
      */
     private void writeData() {
+        String timeStamp = String.join("_", (new Date()).toString().split(" "));
         StringBuilder data = new StringBuilder();
-        Formatter frmt = new Formatter(data);
-        for (int i = 0; i < aggregators.size(); i++) {
-            frmt.format("%-16s", aggregators.get(i).getType().toString() + ", ");
-        }
-        data.append("\n");
-        for (int i = 0; i < HistoricalDataPoint.CAPACITY; i++) { // this method is ugly, needs some cleaning
-            for (HistoricalDataPoint dataPoint : aggregators) {
-                if (dataPoint.getAllReadings().size() > i) {
-                    frmt.format("%-16s", dataPoint.getAllReadings().get(i) + ", ");
-                } else {
-                    frmt.format("%-16s", "--, ");
-                }
+        for (HistoricalDataPoint dp : aggregators) {
+            data.append(dp.getType().toString());
+            data.append("\nDaily high/low ").append(dp.getDailyHigh() + " ").append(dp.getDailyLow());
+            data.append("\nMonthly high/low ").append(dp.getMonthlyHigh() + " ").append(dp.getMonthlyLow());
+            data.append("\nYearly high/low ").append(dp.getYearlyHigh() + " ").append(dp.getYearlyLow());
+            data.append("\nHourly readings (past hour) ");
+            for (double p : dp.getHourlyReadings()) {
+                data.append(p + " ");
+            }
+            data.append("\nMost recent readings ");
+            for (double p : dp.getAllReadings()) {
+                data.append(p + " ");
             }
             data.append("\n");
         }
-        String fileUrl = DATA_URL + String.join("_", (new Date()).toString().split(" ")) + ".csv";
         try {
-            FileOutputStream out = new FileOutputStream(fileUrl);
+            FileOutputStream out = new FileOutputStream(DATA_URL + timeStamp + ".txt");
             out.write(data.toString().getBytes());
         } catch (FileNotFoundException fne) {
             System.out.println("Unable to create output file. Are permissions correct?");

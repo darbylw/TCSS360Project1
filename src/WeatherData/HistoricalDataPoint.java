@@ -16,9 +16,11 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     /** The maximum number of data points held by an object. */
     public static final int CAPACITY = 24;
     /** Calendar object, tracks time stamps. */
-    public final GregorianCalendar currCal = new GregorianCalendar();
+    private GregorianCalendar currCal = new GregorianCalendar();
     /** All data points received from sensor. */
     protected final LinkedList<Double> allReadings = new LinkedList<>();
+    /** Aggregated readings from each hour. */
+    private final LinkedList<Double> hourlyReadings = new LinkedList<>();
     /** The most recent reading from the sensor. */
     private double currentReading;
     /** Daily high temp. Resets every 24 hours after initial data point is added.*/
@@ -33,8 +35,6 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     private double yearlyHigh = Double.MIN_VALUE;
     /** Yearly low temp. Resets every 365 days after initial data point is added.*/
     private double yearlyLow = Double.MAX_VALUE;
-    /** Aggregated readings from each hour. */
-    private final List<Double> hourlyReadings = new ArrayList<>();
     /** Epoch time stamp, tracks when an hour has passed. */
     private long hourInterval = currCal.getTimeInMillis();
     /** The Calendar day in which the most recent data point was added. */
@@ -142,6 +142,12 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
         return hourlyReadings;
     }
 
+    /** Gets the current Calendar used to maintain chronology for this object. */
+    public GregorianCalendar getCalendar() { return currCal; }
+
+    /** Sets this objects calendar. */
+    public void addToCal(int field, int amount) { currCal.add(field, amount); }
+
     /**
      * Adds a data point to the historical collection of data
      * (hourly intervals, daily, monthly, and yearly highs. Assumes
@@ -155,9 +161,9 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
         currentReading = point;
 
         if ((currCal.getTimeInMillis() - hourInterval) >= 3600000) {
-            hourlyReadings.clear();
+            hourlyReadings.addLast(point);
+            if (hourlyReadings.size() > CAPACITY) hourlyReadings.removeFirst();
             hourInterval = currCal.getTimeInMillis();
-            hourlyReadings.add(point);
         }
         if (currCal.get(Calendar.DAY_OF_YEAR) != currDay) {
             currDay = currCal.get(Calendar.DAY_OF_YEAR);
