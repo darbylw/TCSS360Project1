@@ -7,8 +7,8 @@ import WeatherData.HistoricalDataPoint;
 import WeatherData.Sensor;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +29,26 @@ public class DataRelay implements Serializable {
     private final String DATA_URL = "WDATA_";
     /** Tracks the number of data points that have been processed. */
     private int processed = 0;
+
+    /**
+     * Creates a generic DataRelay capable of processing all available
+     * types of sensor data. Assumes all sensors are of type OUTSIDE.
+     */
+    public DataRelay() {
+        for (int i = 0; i < DataType.ALL_TYPES.length; i++) {
+            aggregators.add(HistoricalDataPoint.fromType(DataType.ALL_TYPES[i], Sensor.OUTSIDE));
+        }
+    }
+
+    /**
+     * Creates a DataRelay with the provided list of data point objects.
+     * @param dataPoints a variable number, or array, of HistoricalDataPoint
+     *                   objects.
+     */
+    public DataRelay(HistoricalDataPoint... dataPoints) {
+        if (dataPoints.length < 1) throw new IllegalArgumentException("DataRelay requires at least one data point.");
+        aggregators.addAll(Arrays.asList(dataPoints));
+    }
 
     /**
      * Constructs a new DataRelay for the specified list of

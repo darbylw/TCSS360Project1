@@ -1,7 +1,9 @@
-package WeatherData;/*
+/*
  * An enum that models the different types of sensor
  * data outputs.
  */
+
+package WeatherData;
 
 /**
  * Distinguishes different types of data 
@@ -29,6 +31,15 @@ public enum DataType {
     WIND_DIRECTION, 
     /** The speed of the wind. */
     WIND_SPEED;
+
+    /**
+     * An array containing all types associated with the DataType
+     * enum.
+     */
+    public static final DataType[] ALL_TYPES = new DataType[]{
+            DataType.HUMIDITY, DataType.TEMPERATURE, DataType.SOIL_MOISTURE,
+            DataType.RAIN_FALL, DataType.ULTRAVIOLET, DataType.SOLAR_RADIATION,
+            DataType.WIND_DIRECTION, DataType.WIND_SPEED, DataType.RAIN_RATE};
 
     public String toString() {
         String decriptor;

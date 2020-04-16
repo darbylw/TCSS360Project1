@@ -13,13 +13,9 @@ import java.util.Scanner;
  * classes.
  */
 public class Main {
-    
-    private static DataType[] type = new DataType[]{DataType.HUMIDITY, DataType.TEMPERATURE, DataType.SOIL_MOISTURE,
-                DataType.RAIN_FALL, DataType.ULTRAVIOLET, DataType.SOLAR_RADIATION,
-                DataType.WIND_DIRECTION, DataType.WIND_SPEED, DataType.RAIN_RATE}; 
         
     public static void main(String[] args) {
-        DataRelay dataSet = new DataRelay(type, Sensor.OUTSIDE);
+        DataRelay dataSet = new DataRelay(DataType.ALL_TYPES, Sensor.OUTSIDE);
         String inputFileLocation = "test10000.txt"; //TODO add input file location here
         try {
             File inputFile = new File(inputFileLocation);
@@ -28,7 +24,7 @@ public class Main {
             while (s.hasNext()) {
                 String next = s.next();
                 Double data = Double.parseDouble(next); 
-                dataSet.acceptDataPoint(data, type[iterations % type.length]);
+                dataSet.acceptDataPoint(data, DataType.ALL_TYPES[iterations % DataType.ALL_TYPES.length]);
                 dataSet.incrementCal(Calendar.MINUTE, 15);
                 iterations++;
             }

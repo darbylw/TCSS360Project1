@@ -1,6 +1,8 @@
-package WeatherData;/*
+/*
  * A base class that manages historical data processing.
  */
+
+package WeatherData;
 
 import java.io.Serializable;
 import java.util.*;
@@ -96,6 +98,12 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
 
     /** Gets this objects data type. */
     public abstract DataType getType();
+
+    /** Gets the upper bound of the acceptable input range for this data point. */
+    public abstract double getUpperBound();
+
+    /** Gets the lower bound of the acceptable input range for this data point. */
+    public abstract double getLowerBound();
 
     /** Gets the record of all data point accepted by this object. */
     public List<Double> getAllReadings() {

@@ -3,8 +3,8 @@
  * class.
  */
 
+import WeatherData.DataType;
 import WeatherData.HistoricalDataPoint;
-import WeatherData.Humidity;
 import WeatherData.Sensor;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,24 +20,34 @@ import java.util.Random;
  */
 public class HistoricalDataPointTest {
 
-    /** The test data point, instantiated as a WeatherData.Humidity object. */
-    private final HistoricalDataPoint testCollector = new Humidity(Sensor.OUTSIDE);
     /** The random number generator used to create data points. */
     private final Random numGen = new Random();
 
     /**
-     * Tests the tracking of daily high/low data points by generating
-     * random humidity values and manually incrementing the WeatherData.Humidity
-     * object's Calendar.
-     * @author Spencer Little
-     * @version 0.0.0
+     * Tests each instantiable data point specified in the DataTypes
+     * enum by passing each to the respective testDaily/Weakly/Yearly
+     * reading methods.
      */
     @Test
-    public void testDailyReading() {
-        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+    public void testDataPoints() {
+        for (DataType t : DataType.ALL_TYPES) {
+            testDailyReading(HistoricalDataPoint.fromType(t, Sensor.OUTSIDE)); // inside and outside cases are identical
+            testMonthlyReading(HistoricalDataPoint.fromType(t, Sensor.OUTSIDE));
+            testYearlyReading(HistoricalDataPoint.fromType(t, Sensor.OUTSIDE));
+        }
+    }
+
+    /**
+     * Tests the tracking of daily high/low data points by generating
+     * random values and manually incrementing the WeatherData object's
+     * Calendar to simulate time passed.
+     */
+    public void testDailyReading(HistoricalDataPoint testCollector) {
+        double max = Double.MIN_VALUE,  min = Double.MAX_VALUE;
         int day = testCollector.getCalendar().get(Calendar.DAY_OF_YEAR);
         for (int i = 0; i < numGen.nextInt(1000); i++) {
-            int data = numGen.nextInt(100) + 1;
+            double data = testCollector.getLowerBound()
+                    + (testCollector.getUpperBound() - testCollector.getLowerBound()) * numGen.nextDouble();
             if (day != testCollector.getCalendar().get(Calendar.DAY_OF_YEAR)) { // if day changes, reset max, min
                 max = data;
                 min = data;
@@ -55,17 +65,15 @@ public class HistoricalDataPointTest {
 
     /**
      * Tests the tracking of monthly high/low data points by generating
-     * random humidity values and manually incrementing the WeatherData.Humidity
-     * object's Calendar.
-     * @author Spencer Little
-     * @version 0.0.0
+     * random values and manually incrementing the WeatherData object's
+     * Calendar to simulate time passed.
      */
-    @Test
-    public void testMonthlyReading() {
-        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+    public void testMonthlyReading(HistoricalDataPoint testCollector) {
+        double max = Double.MIN_VALUE, min = Double.MAX_VALUE;
         int month = testCollector.getCalendar().get(Calendar.MONTH);
         for (int i = 0; i < numGen.nextInt(1000); i++) {
-            int data = numGen.nextInt(100) + 1;
+            double data = testCollector.getLowerBound()
+                    + (testCollector.getUpperBound() - testCollector.getLowerBound()) * numGen.nextDouble();
             if (month != testCollector.getCalendar().get(Calendar.MONTH)) { // if month changes, reset max, min
                 max = data;
                 min = data;
@@ -83,17 +91,15 @@ public class HistoricalDataPointTest {
 
     /**
      * Tests the tracking of yearly high/low data points by generating
-     * random humidity values and manually incrementing the WeatherData.Humidity
-     * object'Sos Calendar.
-     * @author Spencer Little
-     * @version 0.0.0
+     * random values and manually incrementing the WeatherData object's
+     * Calendar to simulate time passed.
      */
-    @Test
-    public void testYearlyReading() {
-        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+    public void testYearlyReading(HistoricalDataPoint testCollector) {
+        double max = Double.MIN_VALUE, min = Double.MAX_VALUE;
         int year = testCollector.getCalendar().get(Calendar.YEAR);
         for (int i = 0; i < numGen.nextInt(1000); i++) {
-            int data = numGen.nextInt(100) + 1;
+            double data = testCollector.getLowerBound()
+                    + (testCollector.getUpperBound() - testCollector.getLowerBound()) * numGen.nextDouble();
             if (year != testCollector.getCalendar().get(Calendar.YEAR)) { // if year changes, reset max, min
                 max = data;
                 min = data;

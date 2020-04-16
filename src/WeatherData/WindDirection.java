@@ -63,6 +63,28 @@ public class WindDirection extends HistoricalDataPoint {
     public DataType getType() {
         return dataType;
     }
+
+    /**
+     * Returns the upper bound of the range of acceptable
+     * values for this data point.
+     * @return a double representing the upper bound of acceptable
+     *         values for this data point
+     */
+    @Override
+    public double getUpperBound() {
+        return rangeHigh;
+    }
+
+    /**
+     * Returns the lower bound of the range of acceptable
+     * values for this data point.
+     * @return a double representing the lower bound of acceptable
+     *         values for this data point
+     */
+    @Override
+    public double getLowerBound() {
+        return rangeLow;
+    }
     
     /**
      * Possibly an alarm message here?
