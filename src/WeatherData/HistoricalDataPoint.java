@@ -200,4 +200,29 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
             yearlyHigh = Math.max(point, yearlyHigh);
         }
     }
+
+    /**
+     * Compares another HistoricalData point with this by
+     * comparing the hourly and most recent readings, and all
+     * high/low metrics.
+     * @param o the other HistoricalDataPoint object to compare
+     *          against this
+     * @return a boolean indicating whether this == o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HistoricalDataPoint od = (HistoricalDataPoint) o;
+
+        return allReadings.equals(od.getAllReadings())
+                && hourlyReadings.equals(od.getHourlyReadings())
+                && dailyHigh == od.getDailyHigh()
+                && dailyLow == od.getDailyLow()
+                && monthlyHigh == od.getMonthlyHigh()
+                && monthlyLow == od.getMonthlyLow()
+                && yearlyHigh == od.getYearlyHigh()
+                && yearlyLow == od.getYearlyLow();
+    }
 }

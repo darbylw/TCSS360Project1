@@ -63,6 +63,12 @@ public class DataRelay implements Serializable {
     }
 
     /**
+     * Returns the list of DataPoints maintained by this object.
+     * @return a LinkedList of DataPoints maintained by this object
+     */
+    public List<HistoricalDataPoint> getDataPoints() { return aggregators; }
+
+    /**
      * Increments the Calendar of each data point object in this DataRelay.
      * @param field the calendar field to increment (a constant from Calendar, eg. Calendar.YEAR)
      * @param amount the amount to increment
@@ -120,24 +126,13 @@ public class DataRelay implements Serializable {
             System.out.println("Error occurred while writing to data file.");
         }
     }
-    
-    /** Serializes an input file. 
-     * @param inputFile is the data file which we must serialize
-     * @param serializedFile is the data file which we will transmit
-     */
-    public File serializeData(File inputFile) {
-        File serializedFile = new File("serializedFile.txt");
-        try {    
-            FileOutputStream file = new FileOutputStream(serializedFile); 
-            ObjectOutputStream out = new ObjectOutputStream(file); 
-            //out serializes the inputFile into serializedFile
-            out.writeObject(inputFile); 
-            out.close(); 
-            file.close(); 
-            
-        } catch(IOException ex) { 
-            System.out.println("Error, input file could not be serialized."); 
-        } 
-        return serializedFile;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataRelay or = (DataRelay) o;
+        return aggregators.equals(or.aggregators);
     }
 }
