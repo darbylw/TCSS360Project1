@@ -127,12 +127,33 @@ public class DataRelay implements Serializable {
         }
     }
 
-    /**
-     * Compares this DataRelay with another by comparing
-     * the list of data points.
-     * @param o the DataRelay to compare against
-     * @return a boolean indicating whether this == o
+    /** Serializes an input file.
+     * @param inputFile is the data file which we must serialize
+     * @param serializedFile is the data file which we will transmit
      */
+    public File serializeData(File inputFile) {
+        File serializedFile = new File("serializedFile.txt");
+        try {
+            FileOutputStream file = new FileOutputStream(serializedFile);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            //out serializes the inputFile into serializedFile
+            out.writeObject(inputFile);
+            out.close();
+            file.close();
+
+        } catch(IOException ex) {
+            System.out.println("Error, input file could not be serialized.");
+        }
+        return serializedFile;
+    }
+
+
+/**
+ * Compares this DataRelay with another by comparing
+ * the list of data points.
+ * @param o the DataRelay to compare against
+ * @return a boolean indicating whether this == o
+ */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
