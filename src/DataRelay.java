@@ -127,6 +127,12 @@ public class DataRelay implements Serializable {
         }
     }
 
+    /**
+     * Compares this DataRelay with another by comparing
+     * the list of data points.
+     * @param o the DataRelay to compare against
+     * @return a boolean indicating whether this == o
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

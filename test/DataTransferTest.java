@@ -20,9 +20,9 @@ import java.util.Random;
 public class DataTransferTest {
 
     /**
-     * Tests the serialization of DataRelay writing an
-     * object to disk then recovering it, and verifying
-     * it's equality with the original object.
+     * Tests the serialization of DataRelay by writing a
+     * test instance to disk then recovering it and
+     * verifying it's equality with the original object.
      */
     @Test
     public void testSerialization() {
@@ -42,7 +42,7 @@ public class DataTransferTest {
             System.out.println("Error occurred while writing DataRelay to file (during serialization).");
             System.exit(1);
         } catch (ClassNotFoundException e) {
-            System.out.println("Error occured while reading DataRelay object from file (during reserialization).");
+            System.out.println("Error occurred while reading DataRelay object from file (during reserialization).");
             System.exit(1);
         }
 
