@@ -1,7 +1,5 @@
 package WeatherData;
 
-import WeatherData.HistoricalDataPoint;
-
 import java.util.Objects;
 
 /**
@@ -79,7 +77,6 @@ public class UltraViolet extends HistoricalDataPoint {
         StringBuilder sb = new StringBuilder();
         if (point1 >= alarmRangeHigh) {
             sb.append("WARNING!, UV dosage is HIGH");
-
         } else if (point1 == alarmRangeLow) {
             sb.append("No protection needed");
         }

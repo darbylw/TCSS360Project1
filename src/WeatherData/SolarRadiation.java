@@ -14,6 +14,8 @@ public class SolarRadiation extends HistoricalDataPoint {
 
     /** The data type (category) that describes this object. */
     private final DataType dataType = DataType.SOLAR_RADIATION;
+    /** The value at which a warning is registered. */
+    private final int WARNING_LEVEL = 200;
     /**
      * The sensor type providing this instance with data.
      */
@@ -69,7 +71,7 @@ public class SolarRadiation extends HistoricalDataPoint {
     public String alarmWarning(double point) {
         double point1 = point;
         StringBuilder sb = new StringBuilder();
-        if (point1 >= super.getHourlyReading()) {
+        if (point1 >= WARNING_LEVEL) {
             sb.append("WARNING!, Higher Radiations than usual");
         }
 

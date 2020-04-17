@@ -91,11 +91,6 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
         return newPoint;
     }
 
-    /** Gets the most recent hourly reading. */
-    public Double getHourlyReading() {
-        return hourlyReadings.get(hourlyReadings.size() - 1);
-    }
-
     /** Gets this objects data type. */
     public abstract DataType getType();
 
@@ -108,11 +103,6 @@ public abstract class HistoricalDataPoint implements WDataPoint, Serializable {
     /** Gets the record of all data point accepted by this object. */
     public List<Double> getAllReadings() {
         return allReadings;
-    }
-
-    /** Gets the most recent data point accepted by this object. */
-    public double getCurrentReading() {
-        return currentReading;
     }
 
     /** Gets the daily high. */
